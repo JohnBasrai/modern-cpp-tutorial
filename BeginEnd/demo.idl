@@ -1,0 +1,9 @@
+module BeginEnd
+{
+    typedef sequence <double> DoubleSeq;
+
+    interface demo
+    {
+        void method_a(in DoubleSeq args);
+    };
+};
