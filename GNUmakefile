@@ -9,7 +9,10 @@ EXES := $(foreach x,$(X1_),bin/$(x))
 
 # $(warning EXES : $(EXES))
 
-all:  $(EXES)
+all:  bin $(EXES)
+
+bin:
+	mkdir -p bin
 
 OPT ?= -O3
 STD ?= c++17
