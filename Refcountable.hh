@@ -54,7 +54,7 @@ namespace util
         }
 
         // Returns current reference count for this object.
-        int refcount() const { return theRefcount; }
+        int refcount() const { return theRefcount.load(); }
 
     protected:
         // Protected constructor initializes theRefcount to 0.

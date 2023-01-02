@@ -1,23 +1,34 @@
-#include <memory>      // std::unique_ptr
-#include <functional>  // std::function<>
-#include <stdio.h>     // FILE
+#include <memory>
+struct B {
+    virtual ~B() = default;
+    virtual void fun(){};
+};
+struct D : public B {
+    void fun() override{};
+};
+int main() {
+    auto aPtr = std::make_unique<D>();
 
-template<typename T>
-using deleted_unique_ptr = std::unique_ptr<T,std::function<void(T*)>>;
-using FILE_PTR = deleted_unique_ptr<FILE>;
+    // Type is of base class (polymorphic)
+    //std::unique_ptr<B> bPtr = new D(); // fails to compile
+    // error: conversion from ‘D*’ to non-scalar type ‘std::unique_ptr<B>’ requested
 
-int main()
-{
-    FILE_PTR file(
-        fopen("file.txt", "r"),          // Open a file
-        [](FILE* f) { if(f) fclose(f); } // exception safe auto-close
-    );
-    char buf[10];
-    if(file) fgets(buf, sizeof(buf), &* file );
+    const auto bPtr = std::unique_ptr<B>(new D());
+    bPtr->fun(); // invokes D::fun
+    aPtr->fun(); // invokes D::fun
+
+    // Correct way to "reset" a pointer
+    aPtr.reset(new D());
+    aPtr.reset(nullptr);
+
+    //bPtr = nullptr;
+    // error: no match for ‘operator=’ (operand types are ‘const
+    // std::unique_ptr<B>’ and ‘std::nullptr_t’)
+    // bPtr = 0;
+    // error: no match for ‘operator=’ (operand types are ‘const
+    // std::unique_ptr<B>’ and ‘int’)
+
+    // Access native pointer (use with caution).
+    bPtr.get();
 }
-
-struct X { X(int){} };
-X x1(0);
-X x2 = X(0);
-
 

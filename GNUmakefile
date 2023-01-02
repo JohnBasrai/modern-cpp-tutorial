@@ -28,6 +28,9 @@ endef
 bin/UniquePtr : UniquePtr.cpp
 	$(call BUILD,$@)
 
+bin/UniquePtrCustomDeleter : UniquePtrCustomDeleter.cpp
+	$(call BUILD,$@)
+
 bin/WithLambda : WithLambda.cpp
 	$(call BUILD,$@)
 
@@ -55,7 +58,7 @@ bin/enums : enums.cpp
 bin/ForEach : ForEach.cpp
 	$(call BUILD,$@)
 
-bin/Refcountable : Refcountable.cpp
+bin/Refcountable : Refcountable.cpp Refcountable.hh
 	$(call BUILD,$@)
 
 bin/InheritedCtor : InheritedCtor.cpp

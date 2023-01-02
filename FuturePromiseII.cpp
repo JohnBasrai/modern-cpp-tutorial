@@ -15,8 +15,14 @@ template<typename F> auto async(F && func) -> std::future<decltype(func())>
 
     std::thread( std::bind( [=](std::promise<result_type>& promise )
     {
-        try { promise.set_value(func()); }
-        catch(...) { promise.set_exception(std::current_exception()); }
+        try
+        {
+            promise.set_value(func());
+        }
+        catch(...)
+        {
+            promise.set_exception(std::current_exception());
+        }
     }, std::move(promise))).detach();
 
     return std::move(future);

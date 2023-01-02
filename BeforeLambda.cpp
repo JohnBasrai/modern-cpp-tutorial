@@ -18,7 +18,7 @@ const TableEntry * findValueFor(int toFind)
 {
     const FindMatchFunction mySearchCrit(toFind);
     TableType::const_iterator iter =
-        std::find_if(theTable.begin(), theTable.begin(), mySearchCrit);
+        std::find_if(theTable.begin(), theTable.end(), mySearchCrit);
     if( iter != theTable.end() ) { return &(*iter); } // found it }
     return nullptr;
 }
