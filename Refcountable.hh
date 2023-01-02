@@ -8,10 +8,8 @@
 #include <atomic>
 #include <boost/assert.hpp>
 
-namespace util
-{
+namespace util {
     using atomic_type = std::atomic_int64_t;
-
     static inline int64_t AtomicAdd(atomic_type* counter, const int32_t toAdd)
     {
         const auto oldValue = counter->fetch_add(toAdd, std::memory_order_relaxed);
@@ -26,27 +24,27 @@ namespace util
         virtual ~Refcountable(){};
         virtual void deleteNotify() {}
     public:
-        void _addRef_() { AtomicAdd(&theRefcount, 1); }
+        void _addRef_()
+        {
+            BOOST_ASSERT(theRefcount >= 0);
+            AtomicAdd(&theRefcount, 1);
+        }
         void _decRef_()
         {
+            BOOST_ASSERT(theRefcount >= 0);
             if ( AtomicAdd(&theRefcount,  -1) == 0 )
             {
                 deleteNotify();
-                theRefcount = -1;
                 delete this;
             }
         }
-        int refcount() const
-        {
-            return theRefcount.load(std::memory_order_relaxed);
-        }
+        int refcount() const { return theRefcount.load(std::memory_order_relaxed); }
 
     protected:
-        Refcountable() : theRefcount(0) {}
+        Refcountable() : theRefcount(0) {} // protected ctor
 
     private:
         atomic_type theRefcount;
-
         Refcountable& operator=(const Refcountable&rhs);
         Refcountable(Refcountable&);
     };
