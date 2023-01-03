@@ -1,3 +1,4 @@
+
 #include <memory>      // std::unique_ptr
 #include <functional>  // std::function<>
 #include <stdio.h>     // FILE
@@ -25,6 +26,7 @@ int main()
     if (file) // check if OK.
     {
         fgets(buf, sizeof(buf), &* file );
+        fgets(buf, sizeof(buf), file.get() );
     }
 }
 

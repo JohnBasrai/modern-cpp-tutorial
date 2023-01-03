@@ -21,7 +21,7 @@ namespace util
     class Refcountable
     {
     protected:
-        virtual ~Refcountable(){};
+        virtual ~Refcountable() = default;
         virtual void deleteNotify() {}
     public:
         void _addRef_()
