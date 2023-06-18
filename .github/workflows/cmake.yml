@@ -20,8 +20,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Update, then install cmake, g++
-      run: apt update && apt -y upgrade && apt-get install -y cmake g++
+    - name: Install cmake & g++
+      run: sudo apt-get install -y cmake g++
 
     - name: Configure cmake
       run: cd ${{github.workspace}} && mkdir -p build && (cd build && cmake ..)
