@@ -1,6 +1,6 @@
 
 #include <memory>
-struct Stream { void process(); };
+struct Stream { void process(){} };
 using StreamPtr = std::shared_ptr<Stream>; // Old: typedef std::shared_ptr<Stream> StreamPtr;
 
 void process()
