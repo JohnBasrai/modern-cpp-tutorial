@@ -1,5 +1,5 @@
 # modern-cpp-tutorial
-Source code for slides on C++ a tutorial/overview of Modern C++
+An Introductory Tutorial for Modern C++
 
 # BUILD
 
