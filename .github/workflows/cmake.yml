@@ -27,5 +27,5 @@ jobs:
       run: cd ${{github.workspace}} && mkdir -p build && (cd build && cmake ..)
 
     - name: Build
-      run: cd ${{github.workspace}}/.. && make
+      run: cd ${{github.workspace}}/build && make
 
